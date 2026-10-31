@@ -6,7 +6,7 @@ Tideover is for people who are paid in stablecoins at irregular times: freelance
 
 Built for the Tatum × Walrus **Total Recall** hackathon, Consumer Finance track.
 
-**Demo video:** https://youtu.be/f2WeF2j2nnY · **Write-up:** https://0xkenichi.github.io/blog/tideover/
+**Demo video:** https://youtu.be/517fPzIV6Bg · **Write-up:** https://0xkenichi.github.io/blog/tideover/
 
 ![Tideover five months into the sample: safe to spend per day, and when each payer is really expected](docs/00-hero.png)
 
