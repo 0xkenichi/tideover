@@ -188,6 +188,7 @@ export function Tideover() {
         onWallet={openWallet}
         onSample={() => openSample(newSampleRunId(), 0)}
         status={status}
+        rate={rate}
       />
     );
   }
@@ -302,14 +303,19 @@ function TopBar({ status, rate, onHome }: { status: Status | null; rate: Rate | 
       <button type="button" className="brand" onClick={onHome} disabled={!onHome}>
         <Logo /> Tideover
       </button>
+      {/* Show nothing until the server has said what's set up, rather than a misleading default. */}
       <div className="services">
-        <span className={`dot ${status?.tatum.keySet ? "ok" : "warn"}`}>
-          Tatum {status?.tatum.keySet ? "" : "(no key: slow)"}
-        </span>
-        <span className={`dot ${memory?.writable ? "ok" : memory?.configured ? "warn" : "off"}`}>
-          Walrus Memory{" "}
-          {memory?.writable ? "mainnet" : memory?.configured ? "(read-only)" : "(not set up: nothing is saved)"}
-        </span>
+        {status ? (
+          <>
+            <span className={`dot ${status.tatum.keySet ? "ok" : "warn"}`}>
+              Tatum {status.tatum.keySet ? "" : "(no key: slow)"}
+            </span>
+            <span className={`dot ${memory?.writable ? "ok" : memory?.configured ? "warn" : "off"}`}>
+              Walrus Memory{" "}
+              {memory?.writable ? "mainnet" : memory?.configured ? "(read-only)" : "(not set up: nothing is saved)"}
+            </span>
+          </>
+        ) : null}
         {rate ? (
           <span className="dot ok" title={`${rate.source}, ${new Date(rate.at).toUTCString()}`}>
             $1 = ₦{Math.round(rate.ngnPerUsd).toLocaleString("en-NG")}
@@ -328,10 +334,11 @@ function StartScreen(props: {
   onWallet: (q: string) => void;
   onSample: () => void;
   status: Status | null;
+  rate: Rate | null;
 }) {
   return (
     <main className="shell start">
-      <TopBar status={props.status} rate={null} />
+      <TopBar status={props.status} rate={props.rate} />
       <section className="hero">
         <p className="eyebrow">For people paid in stablecoins, at irregular times</p>
         <h1>Know what you can spend, even when pay comes late.</h1>
