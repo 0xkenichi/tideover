@@ -6,6 +6,10 @@ Tideover is for people who are paid in stablecoins at irregular times: freelance
 
 Built for the Tatum × Walrus **Total Recall** hackathon, Consumer Finance track.
 
+**Demo video:** https://youtu.be/f2WeF2j2nnY · **Write-up:** https://0xkenichi.github.io/blog/tideover/
+
+![Tideover five months into the sample: safe to spend per day, and when each payer is really expected](docs/00-hero.png)
+
 ## Why
 
 A client says they pay on the 1st, and the money lands on the 9th. A DAO stipend arrives some time in the second week. Budgeting apps assume a salary that arrives on the same day every month, so they tell you the wrong thing exactly when money is tight.
@@ -56,11 +60,18 @@ All chain reads go through Tatum, server-side, with the API key kept out of the 
 
 ## How it uses Walrus Memory
 
+![What Tideover remembers: every forecast, grade and lesson, each linked to its Walrus blob](docs/07-timeline.png)
+
 `src/server/memory.ts` uses the official SDK, `@mysten-incubation/memwal`, with the mainnet relayer.
 
 - `rememberBulkAndWait` writes new records in batches of up to 20 and returns each one's Walrus blob ID, which the timeline links to on Walruscan.
 - `recall` with several broad queries (limit 100 each) loads everything Tideover remembers about a wallet when you open it.
 - Memories are encrypted by the relayer before they are stored on Walrus.
+- One run of the five-month sample writes 37 memories to Walrus mainnet: what you taught it, its forecasts, its grades and its lessons.
+
+Turn the **Walrus Memory** switch off and Tideover acts as if it remembered nothing. In the sample it forgets Ada's ₦215,000 of monthly costs, and the safe-to-spend figure jumps from about ₦49,700 a day to ₦66,282:
+
+![The same wallet with memory switched off: raw addresses, no promises, no costs, a different spending number](docs/08-memory-off.png)
 
 ## Try it
 
